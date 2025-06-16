@@ -1,18 +1,21 @@
-name: PR Agent
-
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, reopened, ready_for_review]
+  issue_comment:
 
 jobs:
-  pr-agent:
+  pr_agent_job:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
     steps:
-      - uses: actions/checkout@v3
-      - name: PR Agent via Docker
-        uses: docker://codiumai/pr-agent:latest
+      - name: Qodo Merge with DeepSeek
+        uses: qodo-ai/pr-agent@main
         env:
-          OPENAI_KEY: ${{ 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 }}
-          OPENAI_BASE_URL: https://openrouter.ai/api/v1
-          LLM_PROVIDER: openai
+          OPENROUTER_KEY: ${{ secrets.OPENROUTER_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONFIG__MODEL: "openrouter/deepseek/deepseek-r1-0528"
+          CONFIG__FALLBACK_MODELS: '["openrouter/deepseek/deepseek-r1-0528"]'
+          CONFIG__CUSTOM_MODEL_MAX_TOKENS: "128000"
