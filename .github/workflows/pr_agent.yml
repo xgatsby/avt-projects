@@ -14,7 +14,7 @@ jobs:
       - name: Qodo Merge with DeepSeek
         uses: qodo-ai/pr-agent@main
         env:
-          OPENROUTER_KEY: ${{ secrets.OPENROUTER_KEY }}
+          OPENROUTER_KEY: ${{ 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 }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CONFIG__MODEL: "openrouter/deepseek/deepseek-r1-0528"
           CONFIG__FALLBACK_MODELS: '["openrouter/deepseek/deepseek-r1-0528"]'
